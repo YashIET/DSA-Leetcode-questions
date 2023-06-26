@@ -20,16 +20,19 @@ public:
 //     }
     int lengthOfLIS(vector<int>& nums) {
         //2nd approach in nlogn time
+        //temp.size()also takes some time
+        ///hence use another length variable
         vector<ll>temp;
+        ll len=1;
         temp.push_back(nums[0]);
         for(ll i=1;i<nums.size();i++){
-            if(nums[i]>temp.back())temp.push_back(nums[i]);
+            if(nums[i]>temp.back()){temp.push_back(nums[i]);len++;}
             else{
                 ll idx=lower_bound(temp.begin(),temp.end(),nums[i])-temp.begin();
                 temp[idx]=nums[i];
             }
         }
-        return temp.size();
+        return len;
         
     }
 };
