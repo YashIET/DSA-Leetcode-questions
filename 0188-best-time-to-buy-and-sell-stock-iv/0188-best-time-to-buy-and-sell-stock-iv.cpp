@@ -15,9 +15,30 @@ public:
         }
         return dp[i][buy][cap]=profit;
     }
+    
+    
+//     -------------iterative /  tabulation------------------------------------
+    
     int maxProfit(int k, vector<int>& prices) {
         ll n=prices.size();
-        vector<vector<vector<ll>>>dp(n,vector<vector<ll>>(2,vector<ll>(k+1,-1)));
-        return rec(0,1,k,prices,dp);
+        vector<vector<vector<ll>>>dp(n+1,vector<vector<ll>>(2,vector<ll>(k+1,0)));
+        //i buy cap
+        for(ll i=n-1;i>=0;i--){
+            for(ll buy=0;buy<=1;buy++){
+                for(ll cap=1;cap<=k;cap++){
+                    //copied from memoized code
+                    
+         if(buy){
+           dp[i][buy][cap] =max(-prices[i]+dp[i+1][0][cap],dp[i+1][1][cap]);
+        }
+        else{
+            dp[i][buy][cap] =max(prices[i]+dp[i+1][1][cap-1],dp[i+1][0][cap]);
+        }
+        
+                    
+                }
+            }
+        }
+        return dp[0][1][k];
     }
 };
