@@ -1,28 +1,21 @@
 class Solution {
 public:
-    
-//copied-->https://leetcode.com/problems/minimum-cost-to-cut-a-stick/discuss/781068/Recursion-%2B-Memoization-or-Turned-into-Simple-DP-question-or-C%2B%2B     int dp[102][102];
-    int dp[102][102];
-    int solve(vector<int> &cuts, int low, int high) {
-        if(low+1==high) return 0;
-        else if(dp[low][high]!=-1)
-            return dp[low][high];
-        
-        else {
-            int ans = INT_MAX;
-            for(int i=low+1; i<high; i++) {
-                int curr = cuts[high]-cuts[low] + solve(cuts, low, i) + solve(cuts, i, high);
-                ans = min(ans, curr);
-            }
-            return dp[low][high] = ans;
+    typedef int ll;
+    ll rec(ll i,ll j,vector<ll>&cuts,vector<vector<ll>>&dp){
+        if(i>j)return 0;
+        if(dp[i][j]!=-1)return dp[i][j];
+        ll mini=INT_MAX;
+        for(ll k=i;k<=j;k++){
+            mini=min(mini,rec(i,k-1,cuts,dp)+rec(k+1,j,cuts,dp)+cuts[j+1]-cuts[i-1]);
         }
+        return dp[i][j]= mini;
     }
-    
     int minCost(int n, vector<int>& cuts) {
-        cuts.push_back(0);
-        cuts.push_back(n);
-        memset(dp, -1, sizeof(dp));
-        sort(cuts.begin(), cuts.end());
-        return solve(cuts, 0, cuts.size()-1);
+        ll sizeini=cuts.size();
+        cuts.insert(cuts.begin()+0,0);
+        cuts.insert(cuts.begin()+sizeini-1,n);
+        sort(cuts.begin(),cuts.end());
+        vector<vector<ll>>dp(sizeini+3,vector<ll>(sizeini+3,-1));
+        return rec(1,sizeini,cuts,dp);
     }
 };
