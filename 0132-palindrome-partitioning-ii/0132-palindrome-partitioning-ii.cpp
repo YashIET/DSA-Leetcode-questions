@@ -1,8 +1,8 @@
 class Solution {
 public:
     typedef int ll;
-    bool isPalin(ll i,ll j,string &temp){
-        // ll i=0,j=temp.size()-1;
+    bool isPalin(string &temp){
+        ll i=0,j=temp.size()-1;
         while(i<j){
             if(temp[i++]!=temp[j--])return false;
             
@@ -13,11 +13,11 @@ public:
         if(i==s.size())return 0;
         if(dp[i]!=-1)return dp[i];
         ll mini=INT_MAX;
-        // string temp="";
+        string temp="";
         for(ll ind=i;ind<s.size();ind++){
-            // temp+=s[ind];
+            temp+=s[ind];
             
-            if(isPalin(i,ind,s)){
+            if(isPalin(temp)){
                 ll count=1+rec(ind+1,s,dp);
                 mini=min(mini,count);
             }
