@@ -1,25 +1,22 @@
 typedef int ll;
 class MyStack {
     //every time of push we push to q2 and then push all x from q1 to q2 the push all q2 to q1
-    queue<ll>q1,q2;
+    queue<ll>q1;
 public:
     MyStack() {
         
     }
     
     void push(int x) {
-        q2.push(x);
-        while(!q1.empty()){
+        q1.push(x);
+        ll k=0;
+        while(k<q1.size()-1){
             ll temp=q1.front();
-            q2.push(temp);
-            q1.pop();
-        }
-        while(!q2.empty()){
-            ll temp=q2.front();
             q1.push(temp);
-            q2.pop();
+            q1.pop();
+            k++;
         }
-        
+        //using single queue
     }
     
     int pop() {
