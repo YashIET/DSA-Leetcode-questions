@@ -4,16 +4,13 @@ public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         ll n=nums.size();
         vector<ll>ans;
-        map<ll,ll>m;
-        // ll last=(m.rbegin()->first);
-        for(ll i=0;i<k;i++)m[nums[i]]++;
-        ans.push_back(m.rbegin()->first);
-        if(k>=n){return ans;}
-        for(ll i=k;i<n;i++){
-            m[nums[i-k]]--;
-            if(m[nums[i-k]]==0)m.erase(nums[i-k]);
-            m[nums[i]]++;
-            ans.push_back(m.rbegin()->first);
+        deque<ll>dq;
+        for(ll i=0;i<n;i++){
+            while(!dq.empty()&&dq.front()==i-k)dq.pop_front();//check outof bound from left side
+            
+            while(!dq.empty() && nums[dq.back()]<=nums[i])dq.pop_back();//removes smaller ele 
+            dq.push_back(i);
+            if(i>=k-1)ans.push_back(nums[dq.front()]);
         }
         return ans;
     }
