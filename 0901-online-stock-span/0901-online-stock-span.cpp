@@ -1,20 +1,29 @@
 class StockSpanner {
 public:
     typedef int ll;
-    vector<ll>v;
+    //store next greater to left:-->{nge,index};
+    vector<ll>v,temp;
+    stack<pair<ll,ll>>st;
     StockSpanner() {
-        
+        // v.push_back({0,0});
     }
     
     int next(int price) {
-        v.push_back(price);
-        ll cnt=0;
-        ll n=v.size();
-        for(ll i=n-1;i>=0;i--){
-            if(v[i]<=price)cnt++;
-            else break;
+        temp.push_back(price);
+       while(!st.empty() && st.top().first<=price){
+           st.pop();
+       }
+        if(!st.empty()){
+            v.push_back(st.top().second);
+            
         }
-        return cnt;
+        else{
+            v.push_back(-1);
+            
+        }
+        st.push({price,temp.size()-1});
+        //i-v[i] is the ans
+        return temp.size()-1-v[temp.size()-1];
     }
 };
 
