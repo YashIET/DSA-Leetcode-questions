@@ -2,10 +2,16 @@ class Solution {
 public:
     typedef int ll;
     int numberOfPoints(vector<vector<int>>& nums) {
-        set<ll>st;
+       vector<ll>v(102,0);
         for(auto it:nums){
-            for(ll i=it[0];i<=it[1];i++)st.insert(i);
+            v[it[0]]++;
+            v[it[1]+1]--;
         }
-        return st.size();
+        ll cnt=0;
+        for(ll i=1;i<101;i++){
+            v[i]+=v[i-1];
+            if(v[i]>0)cnt++;
+        }
+        return cnt;
     }
 };
