@@ -1,15 +1,14 @@
 class Solution {
 public:
     typedef int ll;
-   
+    ll rec(ll i,ll n,vector<ll>&dp){
+        if(i>n)return  0;
+        if(i==n)return dp[i]= 1;
+        if(dp[i]!=-1)return dp[i];
+        return dp[i]= rec(i+1,n,dp)+rec(i+2,n,dp);
+    }
     int climbStairs(int n) {
-        
-        // ll arr[n+1]={0};
-        vector<ll>arr(n+1,0);
-        arr[0]=1,arr[1]=1;
-        for(ll i=2;i<=n;i++){
-            arr[i]=arr[i-1]+arr[i-2];
-        }
-        return arr[n];
+        vector<ll>dp(n+1,-1);
+        return rec(0,n,dp);
     }
 };
