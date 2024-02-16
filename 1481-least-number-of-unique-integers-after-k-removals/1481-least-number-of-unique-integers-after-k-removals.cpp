@@ -2,7 +2,7 @@ typedef int ll;
 class Solution {
 public:
     int findLeastNumOfUniqueInts(vector<int>& arr, int k) {
-        map<ll,ll>m;
+        unordered_map<ll,ll>m;
         for(auto it:arr){
             m[it]++;
         }
